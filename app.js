@@ -7,7 +7,7 @@ const app = express();
 
 // Middleware pour autoriser les requêtes depuis localhost
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:3000'); // Remplacez le port par le port de votre application frontend
+    res.header('Access-Control-Allow-Origin', '*'); // Remplacez le port par le port de votre application frontend
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     res.header('Content-Security-Policy', 'default-src *');
