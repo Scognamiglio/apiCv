@@ -1,25 +1,11 @@
 // Importation du module Express
-const express = require('express');
-const bodyParser = require('body-parser');
+const ClassApi = require('./Src/ClassApi');
 
-// Création de l'application Express
-const app = express();
+myApi = new ClassApi()
 
-// Middleware pour autoriser les requêtes depuis localhost
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:3000'); // Remplacez le port par le port de votre application frontend
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    res.header('Content-Security-Policy', 'default-src *');
-    next();
-});
-
-// Middleware pour analyser le corps des requêtes en JSON
-app.use(bodyParser.json());
-
-
-app.get('/user', (req,res) => {
-    const user = {
+function getUser(param,payload){
+    console.log(param)
+    user = {
         'shortIdentity' : 'Legouas Chloé',
         'title' : 'Alternance',
         'description' : 'Charmente jeune fille',
@@ -30,25 +16,12 @@ app.get('/user', (req,res) => {
             'phone' : '0606060606'
         }
     }
-    res.send(user);
-})
 
-// Définition de la route pour /hello
-app.get('/hello', (req, res) => {
-    res.send('Bonjour');
-});
+    return user;
+}
 
-// Route pour gérer les requêtes POST à /message
-app.post('/message', (req, res) => {
-    // Récupérer le message du corps de la requête POST
-    console.log(req.body);
 
-    // Faire quelque chose avec le message (ici, simplement le renvoyer en réponse)
-    res.send(req.body);
-});
+myApi.addRoute('user/:userId','get',getUser); //:userId dit que ce qui va suivre user/ serra un paramètre dynamique et donc n'importe quel valeur
 
-// Démarrage du serveur sur le port 3000
-const port = 3000;
-app.listen(port, () => {
-    console.log(`Serveur en cours d'exécution sur http://localhost:${port}`);
-});
+
+myApi.runServ()
